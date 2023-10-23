@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.StrictMode;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import m13dam.grupo4.actividad2.Database.DatabaseManager;
 
 public class MainActivity extends AppCompatActivity {
