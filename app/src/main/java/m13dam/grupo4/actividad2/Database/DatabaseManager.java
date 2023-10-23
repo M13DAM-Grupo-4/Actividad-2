@@ -32,9 +32,6 @@ public class DatabaseManager {
 
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, props);
-            // Realiza operaciones en la base de datos
-
-            // Cierra la conexión cuando hayas terminado
             return connection;
         } catch (SQLException e) {
             e.printStackTrace();
