@@ -12,7 +12,7 @@ import m13dam.grupo4.actividad2.BuildConfig;
 
 /* Ejemplo de ejecutar consultas en segundo plano(Obligatorio en Android).
 
-Thread testThread = new Thread(() -> {
+        Thread testThread = new Thread(() -> {
             try  {
                 System.out.println(DatabaseManager.GetTables());;
             } catch (Exception e) {
@@ -24,21 +24,16 @@ Thread testThread = new Thread(() -> {
 
 */
 
-
-
 public class DatabaseManager {
-
-    private static String DB_HOST = BuildConfig.PostgreSQL_DB_HOST;
-    private static int DB_PORT = Integer.parseInt(BuildConfig.PostgreSQL_DB_PORT);
-    private static String DB_DATABASE = BuildConfig.PostgreSQL_DB_DATABASE;
-    private static String DB_USER = BuildConfig.PostgreSQL_DB_USER;
-    private static String DB_PASSWORD = BuildConfig.PostgreSQL_DB_PASSWORD;
 
     public static Connection CreateConnection(){
 
-        String jdbcUrl = "jdbc:postgresql://"+DB_HOST+":"+DB_PORT+"/"+DB_DATABASE;
-        String user = DB_USER;
-        String password = DB_PASSWORD;
+        String DB_DATABASE = BuildConfig.PostgreSQL_DB_DATABASE;
+        String DB_HOST = BuildConfig.PostgreSQL_DB_HOST;
+        int DB_PORT = Integer.parseInt(BuildConfig.PostgreSQL_DB_PORT);
+        String jdbcUrl = "jdbc:postgresql://"+ DB_HOST +":"+DB_PORT+"/"+ DB_DATABASE;
+        String user = BuildConfig.PostgreSQL_DB_USER;
+        String password = BuildConfig.PostgreSQL_DB_PASSWORD;
         String sslMode = "require";
 
         Properties props = new Properties();
