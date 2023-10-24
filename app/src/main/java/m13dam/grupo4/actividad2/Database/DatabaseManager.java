@@ -3,6 +3,7 @@ package m13dam.grupo4.actividad2.Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
@@ -36,13 +37,13 @@ public class DatabaseManager {
         return null;
     }
 
-    public static void AddEmpleado(Empleado empleado){
+    public static int AddEmpleado(Empleado empleado){
         try {
             Connection c = CreateConnection();
-            PreparedStatement stmt = c.prepareStatement("INSERT INTO public.Empleados (Nombre, P.Apellido, " +
-                    "S.Apellido, Salario, Horario_Entrada, Horario_Salida, " +
-                    "Id_Departamento, PuestoTrabajo) VALUES" +
-                    "(?,?,?,?,?,?,?,?)");
+            PreparedStatement stmt = c.prepareStatement("INSERT INTO public.empleados (nombre, p_apellido, " +
+                    "s_apellido, salario, horario_entrada, horario_salida, " +
+                    "id_departamento, puesto_trabajo) VALUES" +
+                    "(?,?,?,?,?,?,?,?) RETURNING id");
             stmt.setString(1, empleado.getNombre());
             stmt.setString(2, empleado.getPApellido());
             stmt.setString(3, empleado.getSApellido());
@@ -52,13 +53,20 @@ public class DatabaseManager {
             stmt.setInt(7, empleado.getID_Departamento());
             stmt.setString(8, empleado.getPuestoTrabajo());
 
-            stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                return rs.getInt(1);
+            }
+
             stmt.close();
             c.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return -1;
     }
 
 }

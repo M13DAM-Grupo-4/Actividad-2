@@ -1,7 +1,6 @@
 package m13dam.grupo4.actividad2.Types;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 public class Empleado {
     int ID, ID_Departamento;
