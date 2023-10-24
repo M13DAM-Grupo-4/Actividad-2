@@ -3,26 +3,13 @@ package m13dam.grupo4.actividad2.Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
+import java.sql.Time;
 import java.util.Properties;
 
 import m13dam.grupo4.actividad2.BuildConfig;
-
-/* Ejemplo de ejecutar consultas en segundo plano(Obligatorio en Android).
-
-        Thread testThread = new Thread(() -> {
-            try  {
-                System.out.println(DatabaseManager.GetTables());;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        testThread.start();
-
-*/
+import m13dam.grupo4.actividad2.Types.Empleado;
 
 public class DatabaseManager {
 
@@ -48,29 +35,30 @@ public class DatabaseManager {
         }
         return null;
     }
-    public static ArrayList<String> GetTables(){
 
-        ArrayList<String> Tablas = new ArrayList<>();
+    public static void AddEmpleado(Empleado empleado){
         try {
-            Connection c = DatabaseManager.CreateConnection();
-            String SQL = "SELECT table_name\n" +
-                    "  FROM information_schema.tables\n" +
-                    " WHERE table_schema='public'\n" +
-                    "   AND table_type='BASE TABLE';";
-            assert c != null;
-            PreparedStatement stmt = c.prepareStatement(SQL);
-            ResultSet rs = stmt.executeQuery();
-            while ( rs.next() ) {
-                Tablas.add(rs.getString(1));
-            }
-            rs.close();
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("INSERT INTO public.Empleados (Nombre, P.Apellido, " +
+                    "S.Apellido, Salario, Horario_Entrada, Horario_Salida, " +
+                    "Id_Departamento, PuestoTrabajo) VALUES" +
+                    "(?,?,?,?,?,?,?,?)");
+            stmt.setString(1, empleado.getNombre());
+            stmt.setString(2, empleado.getPApellido());
+            stmt.setString(3, empleado.getSApellido());
+            stmt.setBigDecimal(4, empleado.getSalario());
+            stmt.setString(5, empleado.getHorario_Entrada());
+            stmt.setString(6, empleado.getHorario_Salida());
+            stmt.setInt(7, empleado.getID_Departamento());
+            stmt.setString(8, empleado.getPuestoTrabajo());
+
+            stmt.executeQuery();
             stmt.close();
             c.close();
-            return Tablas;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
 }
