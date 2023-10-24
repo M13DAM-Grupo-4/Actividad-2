@@ -10,13 +10,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import m13dam.grupo4.actividad2.BuildConfig;
+
 public class DatabaseManager {
 
-    private static String DB_HOST = "ep-proud-snowflake-36730271.eu-central-1.aws.neon.fl0.io";
-    private static int DB_PORT = 5432;
-    private static String DB_DATABASE = "m13damactividad6nov";
-    private static String DB_USER = "fl0user";
-    private static String DB_PASSWORD = "vcbU7KJNaeH8";
+    private static String DB_HOST = BuildConfig.PostgreSQL_DB_HOST;
+    private static int DB_PORT = Integer.parseInt(BuildConfig.PostgreSQL_DB_PORT);
+    private static String DB_DATABASE = BuildConfig.PostgreSQL_DB_DATABASE;
+    private static String DB_USER = BuildConfig.PostgreSQL_DB_USER;
+    private static String DB_PASSWORD = BuildConfig.PostgreSQL_DB_PASSWORD;
 
     public static Connection CreateConnection(){
 
