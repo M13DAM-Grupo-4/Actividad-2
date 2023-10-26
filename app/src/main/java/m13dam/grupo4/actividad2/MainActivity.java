@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void abrirNuevaActividad(int valor) {
-        // Si el usuario es válido, abrir la nueva actividad
+
         if (valor>=-1) {
             Intent intent = new Intent(this, listasempleados.class);
             startActivity(intent);
