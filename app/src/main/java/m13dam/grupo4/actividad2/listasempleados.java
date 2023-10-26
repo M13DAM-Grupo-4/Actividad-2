@@ -15,7 +15,7 @@ public class listasempleados extends AppCompatActivity  {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Habilitar el botón de retroceso
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -24,7 +24,6 @@ public class listasempleados extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // Acción a realizar cuando se presiona la flecha de retroceso
             onBackPressed();
             return true;
         }
