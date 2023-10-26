@@ -63,25 +63,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        // TEST
-
-        Thread test1 = new Thread(() -> {
-            Empleado emp1 = new Empleado(-1,1, new BigDecimal(1500), "Nombre",
-                    "1Apellido", "2Apellido", "No trabaja", "08:30",
-                    "14:30");
-
-            int final_id = DatabaseManager.AddEmpleado(emp1);
-            System.out.println("Id es: " + final_id);
-        });
-        test1.start();
     }
 
 
 
     private void abrirNuevaActividad(int valor) {
         // Si el usuario es válido, abrir la nueva actividad
-        if (valor>=0) {
+        if (valor>=-1) {
             Intent intent = new Intent(this, listasempleados.class);
             startActivity(intent);
             finish();
