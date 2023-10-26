@@ -35,6 +35,30 @@ public class DatabaseManager {
         return null;
     }
 
+    public static Connection CreateLocalConnection(){
+        try {
+            Class.forName("org.sqlite.JDBC");
+            return DriverManager.getConnection("jdbc:sqlite:local.db");
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void CreateLocalDB(){
+        try{
+            Connection c = CreateLocalConnection();
+            PreparedStatement stmt = c.prepareStatement("CREATE TABLE IF NOT EXISTS login (id int)");
+            stmt.executeQuery();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static int Login(String user, String pass){
+        return -1;
+    }
+
     public static int AddEmpleado(Empleado empleado){
         try {
             Connection c = CreateConnection();
