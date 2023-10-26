@@ -2,6 +2,7 @@ package m13dam.grupo4.actividad2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -35,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
                 String contraseñaIntroducida_JVM = contraseña.getText().toString();
                 String pattern = "^[a-zA-Z0-9]*$";
                 if (!usuarioIntroducido_JVM.isEmpty() && !contraseñaIntroducida_JVM.isEmpty()) {
+
                     if(usuarioIntroducido_JVM.matches(pattern)){
 
-                        if(!(contraseñaIntroducida_JVM.length()<=4) ) {
+                        if(!(contraseñaIntroducida_JVM.length()<4) ) {
+
                             if(!(contraseñaIntroducida_JVM.length()>=8)){
-
-
+                                DatabaseManager comprobacion = new DatabaseManager();
+                                int validacion = comprobacion.Login(usuarioIntroducido_JVM,contraseñaIntroducida_JVM);
+                                abrirNuevaActividad(validacion);
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "Por favor, la contraseña debe tener 8 digitos o menos", Toast.LENGTH_LONG).show();
@@ -60,15 +64,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-
-
-
         // TEST
 
         Thread test1 = new Thread(() -> {
@@ -80,6 +75,19 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Id es: " + final_id);
         });
         test1.start();
+    }
+
+
+
+    private void abrirNuevaActividad(int valor) {
+        // Si el usuario es válido, abrir la nueva actividad
+        if (valor>=0) {
+            Intent intent = new Intent(this, listasempleados.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
