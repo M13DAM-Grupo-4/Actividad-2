@@ -4,16 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.math.BigDecimal;
-
 import m13dam.grupo4.actividad2.Database.DatabaseManager;
-import m13dam.grupo4.actividad2.Types.Empleado;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,9 +40,21 @@ public class MainActivity extends AppCompatActivity {
                         if(!(contraseñaIntroducida_JVM.length()<4) ) {
 
                             if(!(contraseñaIntroducida_JVM.length()>=8)){
-                                DatabaseManager comprobacion = new DatabaseManager();
-                                int validacion = comprobacion.Login(usuarioIntroducido_JVM,contraseñaIntroducida_JVM);
-                                abrirNuevaActividad(validacion);
+
+                                Thread thread = new Thread(() -> {
+                                    int validacion = DatabaseManager.Login(usuarioIntroducido_JVM,contraseñaIntroducida_JVM, MainActivity.this);
+                                    System.out.println("sadadasdas: " + validacion);
+                                    Handler handler = new Handler(Looper.getMainLooper());
+
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            abrirNuevaActividad(validacion);
+                                        }
+                                    });
+
+                                });
+                                thread.start();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "Por favor, la contraseña debe tener 8 digitos o menos", Toast.LENGTH_LONG).show();
@@ -69,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void abrirNuevaActividad(int valor) {
 
-        if (valor>=-1) {
-            Intent intent = new Intent(this, listasempleados.class);
+        if (valor>0) {
+            Intent intent = new Intent(MainActivity.this, ListasEmpleados.class);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
     }
 

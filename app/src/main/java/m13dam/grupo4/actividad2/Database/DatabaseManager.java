@@ -1,9 +1,7 @@
 package m13dam.grupo4.actividad2.Database;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -15,7 +13,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import m13dam.grupo4.actividad2.BuildConfig;
-import m13dam.grupo4.actividad2.MainActivity;
 import m13dam.grupo4.actividad2.Types.Departamento;
 import m13dam.grupo4.actividad2.Types.Empleado;
 import m13dam.grupo4.actividad2.Types.Encargado;
