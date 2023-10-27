@@ -5,11 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import m13dam.grupo4.actividad2.BuildConfig;
@@ -151,6 +154,209 @@ public class DatabaseManager {
         }
 
         return -1;
+    }
+
+    public static Empleado GetEmpleadoById(int empleado_id){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados WHERE id="+empleado_id+"");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                rs.close();
+                stmt.close();
+                c.close();
+
+                return emp;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleados(){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Departamento GetDepartamentoById(int departamento_id){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.departamentos WHERE id="+departamento_id+"");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                int id_encargado = rs.getInt(3);
+
+                Departamento dep = new Departamento(id, id_encargado, nombre);
+
+                rs.close();
+                stmt.close();
+                c.close();
+
+                return dep;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Departamento> GetDepartamentos(){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.departamentos");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Departamento> Departamentos = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                int id_encargado = rs.getInt(3);
+
+                Departamento dep = new Departamento(id, id_encargado, nombre);
+
+                Departamentos.add(dep);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Departamentos;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Encargado GetEncargadoById(int encargado_id){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.encargados WHERE id="+encargado_id+"");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                //String usuario = rs.getString(6);
+                //String contra = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Encargado enc = new Encargado(id, nombre, p_apellido, s_apellido, horario_entrada,
+                        horario_salida, salario);
+
+                rs.close();
+                stmt.close();
+                c.close();
+
+                return enc;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Encargado> GetEncargados(){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.encargados");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Encargado> Encargados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                //String usuario = rs.getString(6);
+                //String contra = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Encargado enc = new Encargado(id, nombre, p_apellido, s_apellido, horario_entrada,
+                        horario_salida, salario);
+
+
+                Encargados.add(enc);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Encargados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }
