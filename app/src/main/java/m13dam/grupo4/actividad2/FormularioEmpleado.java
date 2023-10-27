@@ -10,12 +10,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import m13dam.grupo4.actividad2.Database.DatabaseManager;
+import m13dam.grupo4.actividad2.Types.Departamento;
 
 public class FormularioEmpleado extends AppCompatActivity {
 
@@ -29,7 +34,8 @@ public class FormularioEmpleado extends AppCompatActivity {
     private EditText salario;
     private EditText puesto;
     private Button enviar;
-
+    private ArrayList <Departamento> arrayDepartamento;
+    int posicionSeleccionada;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,44 @@ public class FormularioEmpleado extends AppCompatActivity {
         salario = findViewById(R.id.insertar_salario);
         puesto = findViewById(R.id.insertar_puesto);
         enviar = findViewById(R.id.enviar_formulario);
+
+
+        ArrayList <String> arrayNombreDepartamento = new ArrayList<>();
+        ArrayAdapter<String> adaptadorDos_JVM = new ArrayAdapter<>(FormularioEmpleado.this, android.R.layout.simple_spinner_item, arrayNombreDepartamento);
+
+
+        Thread thread = new Thread(() -> {
+            arrayDepartamento = DatabaseManager.GetDepartamentos();
+            for(int i = 0; i<arrayDepartamento.toArray().length; i++){
+                arrayNombreDepartamento.add(arrayDepartamento.get(i).getNombre());
+            }
+
+            Handler handler = new Handler(Looper.getMainLooper());
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    adaptadorDos_JVM.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    departamento.setAdapter(adaptadorDos_JVM);
+
+                    //Funcion que nos permite obtener la posicion seleccionada en el spinner
+                    departamento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position_JVM, long id_JVM) {
+                            posicionSeleccionada = position_JVM;
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parentView) {
+                        }
+                    });
+                }
+            });
+
+        });
+
+        thread.start();
+
+
 
         enviar.setOnClickListener(new View.OnClickListener(){
             public void onClick (View v) {
