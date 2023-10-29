@@ -117,17 +117,29 @@ public class FormularioEmpleado extends AppCompatActivity {
 
                 String pattern = "^[a-zA-Z0-9]*$";
                 try {
-                    if (!nombreIntroducido.isEmpty() && !primerApellidoIntroducido.isEmpty() && !segundoApellidoIntroducido.isEmpty() && !horaEntraIntroducido.isEmpty() && !horaSaleIntroducido.isEmpty() && !salarioIntroducido.equals(null) && !puestoIntroducido.isEmpty()) {
-                        int id = dbm.AddEmpleado(new Empleado(-1, DepartElegido, salarioIntroducido, nombreIntroducido, primerApellidoIntroducido, segundoApellidoIntroducido, puestoIntroducido, horaEntraIntroducido, horaSaleIntroducido), "pATO", "PASTO");
+                    Thread thread = new Thread(() -> {
+                        if (!nombreIntroducido.isEmpty() && !primerApellidoIntroducido.isEmpty() && !segundoApellidoIntroducido.isEmpty() && !horaEntraIntroducido.isEmpty() && !horaSaleIntroducido.isEmpty() && !salarioIntroducido.equals(null) && !puestoIntroducido.isEmpty()) {
+                            int id = dbm.AddEmpleado(new Empleado(-1, DepartElegido, salarioIntroducido, nombreIntroducido, primerApellidoIntroducido, segundoApellidoIntroducido, puestoIntroducido, horaEntraIntroducido, horaSaleIntroducido), "pATO", "PASTO");
+                            Handler handler = new Handler(Looper.getMainLooper());
 
-                        if (id>0){
-                            Toast.makeText(getApplicationContext(), "Empleado Añadido", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(getApplicationContext(), "Algo paso", Toast.LENGTH_SHORT).show();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (id>0){
+                                        Toast.makeText(getApplicationContext(), "Empleado Añadido", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(), "Algo paso", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
                         }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
-                    }
+                        });
+
+                    thread.start();
+
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
