@@ -96,7 +96,7 @@ public class EliminarEmple extends AppCompatActivity {
         ArrayAdapter<String> adaptadorDos = new ArrayAdapter<>(EliminarEmple.this, android.R.layout.simple_spinner_item, arrayDatosEmpleado);
 
         Thread thread = new Thread(() -> {
-            arrayEmpleadosElim = DatabaseManager.GetEmpleados();
+            arrayEmpleadosElim = DatabaseManager.GetEmpleadosById(DatabaseManager.Direccion.ASC);
             for (int i = 0; i < arrayEmpleadosElim.size(); i++) {
                 // Construimos una cadena con todos los datos que deseas mostrar
                 String datosEmpleado = arrayEmpleadosElim.get(i).getNombre() + " "+
