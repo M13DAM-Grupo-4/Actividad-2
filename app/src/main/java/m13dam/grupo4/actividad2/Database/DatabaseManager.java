@@ -24,6 +24,11 @@ import m13dam.grupo4.actividad2.Types.Encargado;
 
 public class DatabaseManager {
 
+    public enum Direccion{
+        ASC,
+        DESC
+    }
+
     public static Connection CreateConnection(){
 
         String DB_DATABASE = BuildConfig.PostgreSQL_DB_DATABASE;
@@ -245,10 +250,306 @@ public class DatabaseManager {
         return null;
     }
 
-    public static ArrayList<Empleado> GetEmpleados(){
+    public static ArrayList<Empleado> GetEmpleadosById(Direccion direccion){
         try {
             Connection c = CreateConnection();
-            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados");
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY id "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosByNombre(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY nombre "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosByPApellido(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY p_apellido "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosBySApellido(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY s_apellido "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosBySalario(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY salario "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosByIdEmpleado(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY id_departamento "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosByPuestoTrabajo(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY puesto_trabajo "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosByHorarioEntrada(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY horario_entrada "+direccion.toString()+" ");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<Empleado> Empleados = new ArrayList<>();
+
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String nombre = rs.getString(2);
+                String p_apellido = rs.getString(3);
+                String s_apellido = rs.getString(4);
+                BigDecimal salario = rs.getBigDecimal(5);
+                int id_departamento = rs.getInt(6);
+                String puesto_trabajo = rs.getString(7);
+                String horario_entrada = rs.getString(8);
+                String horario_salida = rs.getString(9);
+
+                Empleado emp = new Empleado(id, id_departamento, salario, nombre, p_apellido,
+                        s_apellido, puesto_trabajo, horario_entrada, horario_salida);
+
+                Empleados.add(emp);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+
+            return Empleados;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Empleado> GetEmpleadosByHorarioSalida(Direccion direccion){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM public.empleados ORDER BY horario_salida "+direccion.toString()+" ");
             ResultSet rs = stmt.executeQuery();
 
             ArrayList<Empleado> Empleados = new ArrayList<>();
