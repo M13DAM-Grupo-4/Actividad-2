@@ -87,7 +87,7 @@ public class EliminarEmple extends AppCompatActivity {
     }
 
     private void UpdateUI() {
-        empleados = findViewById(R.id.spinnerEliminarEmpleado);
+        empleados = findViewById(R.id.rlspinnerEliminarEmpleado);
         eliminar = findViewById(R.id.buttonEliminarEmpleado);
         Toolbar toolbar = findViewById(R.id.toolbarElim);
         setSupportActionBar(toolbar);

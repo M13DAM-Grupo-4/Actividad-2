@@ -55,7 +55,7 @@ public class FormularioEmpleado extends AppCompatActivity {
         s_apellido = findViewById(R.id.insertarSapellido);
         hora_entra = findViewById(R.id.horario_entrada);
         hora_sale = findViewById(R.id.horario_salida);
-        departamento = findViewById(R.id.spinner_IdDepartamento);
+        departamento = findViewById(R.id.rlspinner_IdDepartamento);
         salario = findViewById(R.id.insertar_salario);
         puesto = findViewById(R.id.insertar_puesto);
         enviar = findViewById(R.id.enviar_formulario);

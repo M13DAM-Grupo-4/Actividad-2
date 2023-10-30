@@ -76,6 +76,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:layout_constraintVertical_bias="0.666"
+        android:text=""
+        android:textSize="18sp"
+        android:background="@android:drawable/editbox_background"
+        android:padding="8dp"
+        android:gravity="center"
 
         />
 
@@ -89,7 +94,13 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:text=""
+        android:textSize="18sp"
+        android:background="@android:drawable/editbox_background"
+        android:padding="8dp"
+        android:gravity="center"
+        />
 
     <Button
         android:id="@+id/boton_login"
@@ -101,7 +112,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -113,7 +125,8 @@
         app:layout_constraintHorizontal_bias="0.352"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contraseña_layout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
