@@ -22,12 +22,12 @@ import m13dam.grupo4.actividad2.Types.Departamento;
 import m13dam.grupo4.actividad2.Types.Empleado;
 import m13dam.grupo4.actividad2.Types.Encargado;
 
-enum Direccion{
-    ASC,
-    DESC
-}
-
 public class DatabaseManager {
+
+    public enum Direccion{
+        ASC,
+        DESC
+    }
 
     public static Connection CreateConnection(){
 
