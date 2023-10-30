@@ -88,7 +88,7 @@ public class EliminarEmple extends AppCompatActivity {
                 try {
                     Thread thread = new Thread(() -> {
                         if ( posicionSeleccionada>-1) {
-
+                            arrayEmpleadosElim.get(posicionSeleccionada).getID();
                             Handler handler = new Handler(Looper.getMainLooper());
 
                             handler.post(new Runnable() {
