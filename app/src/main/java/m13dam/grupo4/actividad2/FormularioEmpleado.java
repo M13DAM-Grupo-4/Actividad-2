@@ -17,10 +17,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import m13dam.grupo4.actividad2.Database.DatabaseManager;
 import m13dam.grupo4.actividad2.Types.Departamento;
+import m13dam.grupo4.actividad2.Types.Empleado;
 
 public class FormularioEmpleado extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class FormularioEmpleado extends AppCompatActivity {
     private Button enviar;
     private ArrayList <Departamento> arrayDepartamento;
     int posicionSeleccionada;
+    private int DepartElegido;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,11 @@ public class FormularioEmpleado extends AppCompatActivity {
                     });
                 }
             });
+            for(int i = 0;i<arrayDepartamento.toArray().length;i++ ){
+                if(arrayNombreDepartamento.get(posicionSeleccionada).equals(arrayDepartamento.get(i).getNombre())){
+                    DepartElegido = arrayDepartamento.get(i).getID();
+                }
+            }
 
         });
 
@@ -97,21 +105,43 @@ public class FormularioEmpleado extends AppCompatActivity {
 
         enviar.setOnClickListener(new View.OnClickListener(){
             public void onClick (View v) {
+                DatabaseManager dbm = new DatabaseManager();
                 String nombreIntroducido = nombre.getText().toString();
                 String primerApellidoIntroducido = p_apellido.getText().toString();
                 String segundoApellidoIntroducido = s_apellido.getText().toString();
                 String horaEntraIntroducido = hora_entra.getText().toString();
                 String horaSaleIntroducido = hora_sale.getText().toString();
-                String salarioIntroducido = salario.getText().toString();
+                BigDecimal salarioIntroducido = BigDecimal.valueOf(Long.parseLong(salario.getText().toString()));
                 String puestoIntroducido = puesto.getText().toString();
 
 
                 String pattern = "^[a-zA-Z0-9]*$";
-                if (!nombreIntroducido.isEmpty() && !primerApellidoIntroducido.isEmpty() && !segundoApellidoIntroducido.isEmpty() && !horaEntraIntroducido.isEmpty() && !horaSaleIntroducido.isEmpty() && !salarioIntroducido.isEmpty() && !puestoIntroducido.isEmpty()) {
+                try {
+                    Thread thread = new Thread(() -> {
+                        if (!nombreIntroducido.isEmpty() && !primerApellidoIntroducido.isEmpty() && !segundoApellidoIntroducido.isEmpty() && !horaEntraIntroducido.isEmpty() && !horaSaleIntroducido.isEmpty() && !salarioIntroducido.equals(null) && !puestoIntroducido.isEmpty()) {
+                            int id = dbm.AddEmpleado(new Empleado(-1, DepartElegido, salarioIntroducido, nombreIntroducido, primerApellidoIntroducido, segundoApellidoIntroducido, puestoIntroducido, horaEntraIntroducido, horaSaleIntroducido), "pATO", "PASTO");
+                            Handler handler = new Handler(Looper.getMainLooper());
 
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (id>0){
+                                        Toast.makeText(getApplicationContext(), "Empleado Añadido", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(), "Algo paso", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
+                        }
+                        });
+
+                    thread.start();
+
+                }catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
