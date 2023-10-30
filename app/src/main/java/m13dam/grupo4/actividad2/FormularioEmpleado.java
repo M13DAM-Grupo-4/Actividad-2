@@ -119,7 +119,7 @@ public class FormularioEmpleado extends AppCompatActivity {
                 try {
                     Thread thread = new Thread(() -> {
                         if (!nombreIntroducido.isEmpty() && !primerApellidoIntroducido.isEmpty() && !segundoApellidoIntroducido.isEmpty() && !horaEntraIntroducido.isEmpty() && !horaSaleIntroducido.isEmpty() && !salarioIntroducido.equals(null) && !puestoIntroducido.isEmpty()) {
-                            int id = dbm.AddEmpleado(new Empleado(-1, DepartElegido, salarioIntroducido, nombreIntroducido, primerApellidoIntroducido, segundoApellidoIntroducido, puestoIntroducido, horaEntraIntroducido, horaSaleIntroducido), "pATO", "PASTO");
+                            int id = dbm.AddEmpleado(new Empleado(-1, DepartElegido, salarioIntroducido, nombreIntroducido, primerApellidoIntroducido, segundoApellidoIntroducido, puestoIntroducido, horaEntraIntroducido, horaSaleIntroducido));
                             Handler handler = new Handler(Looper.getMainLooper());
 
                             handler.post(new Runnable() {
