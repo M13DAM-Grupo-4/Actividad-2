@@ -1,6 +1,7 @@
 package m13dam.grupo4.actividad2.Database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
@@ -49,10 +50,48 @@ public class DatabaseManager {
          return new LocalDatabaseManager(c).getWritableDatabase();
     }
 
-    public static int Login(String user, String pass, @Nullable Context ctx){
-        SQLiteDatabase db = GetLocalDB(ctx);
+    public static int LoginRemember(@Nullable Context c){
         try {
+            SQLiteDatabase dbl = GetLocalDB(c);
+            Cursor cr = dbl.rawQuery("SELECT id FROM login WHERE remember=true AND id=1", null);
+            if (cr.moveToFirst()){
+                do {
+                    // Passing values
+                    int ResId = Integer.parseInt(cr.getString(0));
+                    return ResId;
+                } while(cr.moveToNext());
+            }
+            dbl.close();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static void SaveLoginRemember(int userid, @Nullable Context c){
+        try{
+            SQLiteDatabase dbl = GetLocalDB(c);
+            dbl.execSQL("DELETE FROM login");
+            dbl.execSQL("INSERT INTO login (id, user_id, remember) VALUES (1,'"+userid+"', true)");
+            dbl.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void RemoveLoginRemember(@Nullable Context c){
+        try{
+            SQLiteDatabase dbl = GetLocalDB(c);
+            dbl.execSQL("DELETE FROM login");
+            dbl.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int Login(String user, String pass){
+        try {
             Connection c = CreateConnection();
             PreparedStatement stmt = c.prepareStatement("SELECT id FROM public.encargados WHERE usuario=? AND contra=?");
             stmt.setString(1, user);
@@ -69,7 +108,7 @@ public class DatabaseManager {
         return -1;
     }
 
-    public static int AddEmpleado(Empleado empleado, String Usuario, String Contra){
+    public static int AddEmpleado(Empleado empleado){
         try {
             Connection c = CreateConnection();
             PreparedStatement stmt = c.prepareStatement("INSERT INTO public.empleados (nombre, p_apellido, " +

@@ -8,27 +8,46 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import m13dam.grupo4.actividad2.Database.DatabaseManager;
+import m13dam.grupo4.actividad2.Types.CurrentSession;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button boton;
     private EditText usuario;
     private EditText contraseña;
-    private ProgressBar barraDeProgreso;
+    private CheckBox rememberme;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        barraDeProgreso=findViewById(R.id.progressBar);
+
         usuario = findViewById(R.id.usuario_layout);
         contraseña = findViewById(R.id.contraseña_layout);
 
         boton = findViewById(R.id.boton_login);
+
+        rememberme = findViewById(R.id.checkBox);
+
+        Thread thread = new Thread(() -> {
+            int RememberedID = DatabaseManager.LoginRemember(MainActivity.this);
+            if(RememberedID > 0){
+                CurrentSession.setUserID(RememberedID);
+                Handler handler = new Handler(Looper.getMainLooper());
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        abrirNuevaActividad(false);
+                    }
+                });
+            }
+        });
+        thread.start();
 
         boton.setOnClickListener(new View.OnClickListener(){
             public void onClick (View v) {
@@ -42,16 +61,21 @@ public class MainActivity extends AppCompatActivity {
                         if(!(contraseñaIntroducida_JVM.length()<4) ) {
 
                             if(!(contraseñaIntroducida_JVM.length()>=8)){
-                                barraDeProgreso.setVisibility(View.VISIBLE);
 
                                 Thread thread = new Thread(() -> {
-                                    int validacion = DatabaseManager.Login(usuarioIntroducido_JVM,contraseñaIntroducida_JVM, MainActivity.this);
+                                    int RememberedID = DatabaseManager.LoginRemember(MainActivity.this);
+                                    if(RememberedID > 0){
+                                        CurrentSession.setUserID(RememberedID);
+                                    } else {
+                                        int LoginID = DatabaseManager.Login(usuarioIntroducido_JVM,contraseñaIntroducida_JVM);
+                                        CurrentSession.setUserID(LoginID);
+                                    }
                                     Handler handler = new Handler(Looper.getMainLooper());
 
                                     handler.post(new Runnable() {
                                         @Override
                                         public void run() {
-                                            abrirNuevaActividad(validacion);
+                                            abrirNuevaActividad(rememberme.isChecked());
                                         }
                                     });
 
@@ -79,11 +103,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void abrirNuevaActividad(int valor) {
-        barraDeProgreso.setVisibility(View.INVISIBLE);
-        if (valor>0) {
+    private void abrirNuevaActividad(boolean remember) {
+
+        if (CurrentSession.getUserID() > 0) {
             Intent intent = new Intent(MainActivity.this, ListasEmpleados.class);
             startActivity(intent);
+            if (remember){
+                DatabaseManager.SaveLoginRemember(CurrentSession.getUserID(), MainActivity.this);
+            }
             finish();
         } else {
             Toast.makeText(MainActivity.this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();

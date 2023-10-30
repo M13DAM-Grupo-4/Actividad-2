@@ -53,6 +53,7 @@ public class ListasEmpleados extends AppCompatActivity  {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                DatabaseManager.RemoveLoginRemember(ListasEmpleados.this);
                 Intent intent = new Intent(ListasEmpleados.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -65,6 +66,7 @@ public class ListasEmpleados extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                DatabaseManager.RemoveLoginRemember(ListasEmpleados.this);
                 Intent intent = new Intent(ListasEmpleados.this, MainActivity.class);
                 startActivity(intent);
                 return true;
