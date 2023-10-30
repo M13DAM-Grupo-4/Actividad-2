@@ -172,7 +172,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="360dp"
-        android:layout_height="320dp"
+        android:layout_height="280dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"

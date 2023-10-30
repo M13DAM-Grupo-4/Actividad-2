@@ -18,6 +18,7 @@ import m13dam.grupo4.actividad2.Database.DatabaseManager;
 public class ListasEmpleados extends AppCompatActivity  {
 
     private Button añadirEmple;
+    private Button eliminarEmple;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +34,14 @@ public class ListasEmpleados extends AppCompatActivity  {
             }
         });
 
-
-
-
-
-
-
-
-
+        eliminarEmple = findViewById(R.id.eliminar_empleado);
+        eliminarEmple.setOnClickListener(new View.OnClickListener(){
+            public void onClick (View v) {
+                Intent intent = new Intent(ListasEmpleados.this, EliminarEmple.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);

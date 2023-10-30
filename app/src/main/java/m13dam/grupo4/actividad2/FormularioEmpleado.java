@@ -44,7 +44,7 @@ public class FormularioEmpleado extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarForm);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -145,16 +145,6 @@ public class FormularioEmpleado extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
-
-
-
-
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
