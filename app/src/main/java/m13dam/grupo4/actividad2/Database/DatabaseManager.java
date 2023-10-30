@@ -149,7 +149,7 @@ public class DatabaseManager {
     public static boolean RemoveEmpleadoById(int id){
         try {
             Connection con = DatabaseManager.CreateConnection();
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM public.empleado WHERE id='"+id+"'");
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM public.empleados WHERE id="+id+"");
             stmt.executeQuery();
             stmt.close();
             con.close();
