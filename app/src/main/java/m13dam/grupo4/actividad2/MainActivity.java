@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                             if(!(contraseñaIntroducida_JVM.length()>=8)){
 
                                 Thread thread = new Thread(() -> {
-                                    int validacion = DatabaseManager.Login(usuarioIntroducido_JVM,contraseñaIntroducida_JVM, MainActivity.this);
+                                    int validacion = DatabaseManager.Login(usuarioIntroducido_JVM,contraseñaIntroducida_JVM);
                                     System.out.println("sadadasdas: " + validacion);
                                     Handler handler = new Handler(Looper.getMainLooper());
 
