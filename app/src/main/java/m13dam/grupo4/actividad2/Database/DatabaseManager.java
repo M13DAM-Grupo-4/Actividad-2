@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -138,6 +139,20 @@ public class DatabaseManager {
         }
 
         return -1;
+    }
+
+    public static boolean RemoveEmpleadoById(int id){
+        try {
+            Connection con = DatabaseManager.CreateConnection();
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM public.empleado WHERE id='"+id+"'");
+            stmt.executeQuery();
+            stmt.close();
+            con.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static int AddEncargado(Encargado encargado, String Usuario, String Contra){
