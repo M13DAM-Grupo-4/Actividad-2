@@ -38,35 +38,34 @@ public class EliminarEmple extends AppCompatActivity {
 
         UpdateUI();
 
-        eliminar.setOnClickListener(new View.OnClickListener(){
+        eliminar.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v) {
-
-
-                String pattern = "^[a-zA-Z0-9]*$";
-                try {
+                if (posicionSeleccionada >= 0 && posicionSeleccionada < arrayEmpleadosElim.size()) {
                     Thread thread = new Thread(() -> {
-                        if ( posicionSeleccionada>-1) {
-                            System.out.println(arrayEmpleadosElim.get(posicionSeleccionada).getID());
-                            DatabaseManager.RemoveEmpleadoById(arrayEmpleadosElim.get(posicionSeleccionada).getID());
-                            UpdateUI();
-                            Handler handler = new Handler(Looper.getMainLooper());
-
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(getApplicationContext(), "Empleado Eliminado", Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Por favor, selecciona un empleado a borrar", Toast.LENGTH_LONG).show();
+                        try {
+                            int empleadoID = arrayEmpleadosElim.get(posicionSeleccionada).getID();
+                            if (empleadoID > 0) {
+                                DatabaseManager.RemoveEmpleadoById(empleadoID);
+                                UpdateUI();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Empleado Eliminado", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     });
-
                     thread.start();
-
-                }catch (Exception e) {
-                    e.printStackTrace();
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "No hay empleados", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
         });
