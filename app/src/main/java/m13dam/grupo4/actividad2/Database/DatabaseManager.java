@@ -59,7 +59,7 @@ public class DatabaseManager {
     public static int LoginRemember(@Nullable Context c){
         try {
             SQLiteDatabase dbl = GetLocalDB(c);
-            Cursor cr = dbl.rawQuery("SELECT id FROM login WHERE remember=true AND id=1", null);
+            Cursor cr = dbl.rawQuery("SELECT user_id FROM login WHERE remember=true AND id=1", null);
             if (cr.moveToFirst()){
                 do {
                     // Passing values
