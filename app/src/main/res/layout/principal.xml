@@ -163,7 +163,6 @@
         android:layout_width="70dp"
         android:layout_height="280dp"
         android:layout_marginTop="4dp"
-        android:entries="@array/TestStringArray"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/nombre"
         app:layout_constraintTop_toBottomOf="@+id/salario"
