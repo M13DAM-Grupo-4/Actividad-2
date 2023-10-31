@@ -55,7 +55,7 @@ public class FormularioEmpleado extends AppCompatActivity {
         s_apellido = findViewById(R.id.insertarSapellido);
         hora_entra = findViewById(R.id.horario_entrada);
         hora_sale = findViewById(R.id.horario_salida);
-        departamento = findViewById(R.id.spinner_IdDepartamento);
+        departamento = findViewById(R.id.rlspinner_IdDepartamento);
         salario = findViewById(R.id.insertar_salario);
         puesto = findViewById(R.id.insertar_puesto);
         enviar = findViewById(R.id.enviar_formulario);
@@ -103,45 +103,36 @@ public class FormularioEmpleado extends AppCompatActivity {
 
 
 
-        enviar.setOnClickListener(new View.OnClickListener(){
-            public void onClick (View v) {
-                DatabaseManager dbm = new DatabaseManager();
-                String nombreIntroducido = nombre.getText().toString();
-                String primerApellidoIntroducido = p_apellido.getText().toString();
-                String segundoApellidoIntroducido = s_apellido.getText().toString();
-                String horaEntraIntroducido = hora_entra.getText().toString();
-                String horaSaleIntroducido = hora_sale.getText().toString();
-                BigDecimal salarioIntroducido = BigDecimal.valueOf(Long.parseLong(salario.getText().toString()));
-                String puestoIntroducido = puesto.getText().toString();
+        enviar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String nombreIntroducido = nombre.getText().toString().trim();
+                String primerApellidoIntroducido = p_apellido.getText().toString().trim();
+                String segundoApellidoIntroducido = s_apellido.getText().toString().trim();
+                String horaEntraIntroducido = hora_entra.getText().toString().trim();
+                String horaSaleIntroducido = hora_sale.getText().toString().trim();
+                String salarioIntroducidoStr = salario.getText().toString().trim();
+                String puestoIntroducido = puesto.getText().toString().trim();
 
+                if (nombreIntroducido.isEmpty() || primerApellidoIntroducido.isEmpty() || segundoApellidoIntroducido.isEmpty() || horaEntraIntroducido.isEmpty() || horaSaleIntroducido.isEmpty() || salarioIntroducidoStr.isEmpty() || puestoIntroducido.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
+                } else {
+                    BigDecimal salarioIntroducido = BigDecimal.valueOf(Long.parseLong(salarioIntroducidoStr));
 
-                String pattern = "^[a-zA-Z0-9]*$";
-                try {
+                    // Realiza el proceso en un hilo secundario para evitar bloqueos
                     Thread thread = new Thread(() -> {
-                        if (!nombreIntroducido.isEmpty() && !primerApellidoIntroducido.isEmpty() && !segundoApellidoIntroducido.isEmpty() && !horaEntraIntroducido.isEmpty() && !horaSaleIntroducido.isEmpty() && !salarioIntroducido.equals(null) && !puestoIntroducido.isEmpty()) {
-                            int id = dbm.AddEmpleado(new Empleado(-1, DepartElegido, salarioIntroducido, nombreIntroducido, primerApellidoIntroducido, segundoApellidoIntroducido, puestoIntroducido, horaEntraIntroducido, horaSaleIntroducido));
-                            Handler handler = new Handler(Looper.getMainLooper());
-
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (id>0){
-                                        Toast.makeText(getApplicationContext(), "Empleado Añadido", Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(getApplicationContext(), "Algo paso", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
-                        }
+                        DatabaseManager dbm = new DatabaseManager();
+                        int id = dbm.AddEmpleado(new Empleado(-1, DepartElegido, salarioIntroducido, nombreIntroducido, primerApellidoIntroducido, segundoApellidoIntroducido, puestoIntroducido, horaEntraIntroducido, horaSaleIntroducido));
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(() -> {
+                            if (id > 0) {
+                                Toast.makeText(getApplicationContext(), "Empleado Añadido", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Algo pasó", Toast.LENGTH_SHORT).show();
+                            }
                         });
+                    });
 
                     thread.start();
-
-                }catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         });
