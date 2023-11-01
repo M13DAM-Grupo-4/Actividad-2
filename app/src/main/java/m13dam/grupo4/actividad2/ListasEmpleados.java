@@ -116,12 +116,12 @@ public class ListasEmpleados extends AppCompatActivity  {
 
     private void UpdateListaEmpleados(ArrayList<Empleado> emps) {
 
-        List<String> data_Nombres = new ArrayList<>(); // Replace with your data source
-        List<String> data_PApellido = new ArrayList<>(); // Replace with your data source
-        List<String> data_SApellido = new ArrayList<>(); // Replace with your data source
-        List<String> data_Salario = new ArrayList<>(); // Replace with your data source
-        List<String> data_Puesto = new ArrayList<>(); // Replace with your data source
-        List<String> data_Hora = new ArrayList<>(); // Replace with your data source
+        List<String> data_Nombres = new ArrayList<>();
+        List<String> data_PApellido = new ArrayList<>();
+        List<String> data_SApellido = new ArrayList<>();
+        List<String> data_Salario = new ArrayList<>();
+        List<String> data_Puesto = new ArrayList<>();
+        List<String> data_Hora = new ArrayList<>();
 
         for (Empleado e : emps){
             data_Nombres.add(e.getNombre());
