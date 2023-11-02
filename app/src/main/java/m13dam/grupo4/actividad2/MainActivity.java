@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if(!(contraseñaIntroducida_JVM.length()<4) ) {
 
-                            if(!(contraseñaIntroducida_JVM.length()>=8)){
+                            if(!(contraseñaIntroducida_JVM.length()>8)){
 
                                 Thread thread = new Thread(() -> {
                                     int RememberedID = DatabaseManager.LoginRemember(MainActivity.this);
