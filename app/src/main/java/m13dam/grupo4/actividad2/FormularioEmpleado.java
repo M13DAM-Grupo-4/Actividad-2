@@ -113,9 +113,21 @@ public class FormularioEmpleado extends AppCompatActivity {
                 String salarioIntroducidoStr = salario.getText().toString().trim();
                 String puestoIntroducido = puesto.getText().toString().trim();
 
+
+
                 if (nombreIntroducido.isEmpty() || primerApellidoIntroducido.isEmpty() || segundoApellidoIntroducido.isEmpty() || horaEntraIntroducido.isEmpty() || horaSaleIntroducido.isEmpty() || salarioIntroducidoStr.isEmpty() || puestoIntroducido.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Por favor, complete todos los campos", Toast.LENGTH_LONG).show();
                 } else {
+
+                    if (horaEntraIntroducido.split(":").length != 2){
+                        Toast.makeText(getApplicationContext(), "Formato hora: 00:00", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (Integer.parseInt(horaEntraIntroducido.split(":")[0]) > 23 ||
+                            Integer.parseInt(horaEntraIntroducido.split(":")[1]) > 59){
+                        Toast.makeText(getApplicationContext(), "Horas validas: 00:00-23:59", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     BigDecimal salarioIntroducido = BigDecimal.valueOf(Long.parseLong(salarioIntroducidoStr));
 
                     // Realiza el proceso en un hilo secundario para evitar bloqueos
