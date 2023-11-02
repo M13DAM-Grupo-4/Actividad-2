@@ -37,6 +37,7 @@
         android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:inputType="time"
+        android:maxLength="5"
         app:layout_constraintBottom_toTopOf="@+id/spinner_IdDepartamento"
         app:layout_constraintEnd_toStartOf="@+id/guideline11" />
 
@@ -48,6 +49,7 @@
         android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:inputType="time"
+        android:maxLength="5"
         app:layout_constraintBottom_toTopOf="@+id/horario_salida"
         app:layout_constraintEnd_toStartOf="@+id/guideline11" />
 
