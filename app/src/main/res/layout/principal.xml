@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="681dp" />
+        app:layout_constraintGuide_percent="0.93433654" />
 
     <TextView
         android:id="@+id/nombreEncargado"
@@ -79,11 +79,13 @@
 
     <Button
         android:id="@+id/nombre"
-        android:layout_width="70dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="3sp"
+        android:onClick="OrdenarPorNombre"
         android:text="Nombre"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/primer_apellido"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
@@ -91,8 +93,8 @@
         android:id="@+id/modificar_empleado"
         android:layout_width="120dp"
         android:layout_height="35dp"
-        android:layout_marginStart="4dp"
         android:text="Modificar"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintStart_toEndOf="@+id/añadir_empleado"
         app:layout_constraintTop_toTopOf="@+id/añadir_empleado"
@@ -101,111 +103,80 @@
     <Button
         android:id="@+id/añadir_empleado"
         android:layout_width="120dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="50dp"
         android:text="Añadir"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/listaEmpleadosNombre"
-        app:layout_constraintTop_toBottomOf="@+id/listaEmpleadosNombre"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toStartOf="@+id/eliminar_empleado"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/eliminar_empleado"
         android:layout_width="120dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
+        android:layout_height="50dp"
         android:text="Eliminar"
-        app:layout_constraintStart_toEndOf="@+id/modificar_empleado"
-        app:layout_constraintTop_toTopOf="@+id/modificar_empleado" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/añadir_empleado" />
 
     <Button
         android:id="@+id/primer_apellido"
-        android:layout_width="70dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="64dp"
-        android:text="P.Apellido"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="3sp"
+        android:onClick="OrdenarPorPrimerApellido"
+        android:text="Primer apellido"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/segundo_apellido"
         app:layout_constraintStart_toEndOf="@+id/nombre"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <Button
-        android:id="@+id/salario"
-        android:layout_width="70dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="64dp"
-        android:text="Salario"
+        android:id="@+id/puesto"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="3sp"
+        android:onClick="OrdenarPorPuesto"
+        android:text="Puesto"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/segundo_apellido"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <Button
-        android:id="@+id/puesto"
-        android:layout_width="70dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="64dp"
-        android:text="Puesto"
-        app:layout_constraintStart_toEndOf="@+id/salario"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
-
-    <Button
         android:id="@+id/segundo_apellido"
-        android:layout_width="70dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="64dp"
-        android:text="S.Apellido"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="3sp"
+        android:onClick="OrdenarPorSegundoApellido"
+        android:text="Segundo apellido"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/puesto"
         app:layout_constraintStart_toEndOf="@+id/primer_apellido"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaEmpleadosNombre"
-        android:layout_width="70dp"
-        android:layout_height="280dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/nombre"
-        app:layout_constraintTop_toBottomOf="@+id/salario"
-        app:layout_constraintVertical_bias="0.0" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.37" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaEmpleadosPrimerApellido"
-        android:layout_width="70dp"
-        android:layout_height="280dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/primer_apellido"
-        app:layout_constraintTop_toBottomOf="@+id/salario"
-        app:layout_constraintVertical_bias="0.0" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8372093" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaEmpleadosSegundoApellido"
-        android:layout_width="70dp"
-        android:layout_height="280dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/segundo_apellido"
-        app:layout_constraintTop_toBottomOf="@+id/salario"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaEmpleadosSalario"
-        android:layout_width="70dp"
-        android:layout_height="280dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/salario"
-        app:layout_constraintTop_toBottomOf="@+id/salario"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaEmpleadosPuesto"
-        android:layout_width="70dp"
-        android:layout_height="280dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintStart_toStartOf="@+id/puesto"
-        app:layout_constraintTop_toBottomOf="@+id/salario"
-        app:layout_constraintVertical_bias="0.0" />
+    <GridView
+        android:id="@+id/listaGrid"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="3dp"
+        android:numColumns="4"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

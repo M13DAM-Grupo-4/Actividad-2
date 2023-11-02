@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,11 +34,10 @@ public class ListasEmpleados extends AppCompatActivity  {
     private Button eliminarEmple;
     private TextView nombreEncargado;
     private TextView apellidosEncargado;
-    private RecyclerView listaNombres;
-    private RecyclerView listaPApellido;
-    private RecyclerView listaSApellido;
-    private RecyclerView listaSalario;
-    private RecyclerView listaPuesto;
+    private GridView listaGrid;
+
+    String ordenadoPor;
+    DatabaseManager.Direccion direccion;
 
     private ArrayList<Empleado> ListaEmpleados;
     @Override
@@ -49,18 +49,14 @@ public class ListasEmpleados extends AppCompatActivity  {
         nombreEncargado = findViewById(R.id.nombreEncargado);
         apellidosEncargado = findViewById(R.id.apellidosEncargado);
 
-        listaNombres = findViewById(R.id.listaEmpleadosNombre);
-        listaPApellido = findViewById(R.id.listaEmpleadosPrimerApellido);
-        listaSApellido = findViewById(R.id.listaEmpleadosSegundoApellido);
-        listaSalario = findViewById(R.id.listaEmpleadosSalario);
-        listaPuesto = findViewById(R.id.listaEmpleadosPuesto);
+        listaGrid = findViewById(R.id.listaGrid);
 
         Thread thread = new Thread(() -> {
             try {
                 System.out.println(CurrentSession.getUserID());
                 Encargado enc = DatabaseManager.GetEncargadoById(CurrentSession.getUserID());
 
-                ArrayList<Empleado> emps = DatabaseManager.GetEmpleadosById(DatabaseManager.Direccion.ASC);
+                ArrayList<Empleado> emps = DatabaseManager.GetEmpleadosByNombre(DatabaseManager.Direccion.ASC);
                 System.out.println(emps);
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {
@@ -69,6 +65,8 @@ public class ListasEmpleados extends AppCompatActivity  {
                         nombreEncargado.setText(enc.getNombre());
                         apellidosEncargado.setText(enc.getPApellido() + " " + enc.getSApellido());
                         UpdateListaEmpleados(emps);
+                        ordenadoPor = "nombre";
+                        direccion = DatabaseManager.Direccion.ASC;
                     }
                 });
 
@@ -116,43 +114,110 @@ public class ListasEmpleados extends AppCompatActivity  {
 
     private void UpdateListaEmpleados(ArrayList<Empleado> emps) {
 
-        List<String> data_Nombres = new ArrayList<>(); // Replace with your data source
-        List<String> data_PApellido = new ArrayList<>(); // Replace with your data source
-        List<String> data_SApellido = new ArrayList<>(); // Replace with your data source
-        List<String> data_Salario = new ArrayList<>(); // Replace with your data source
-        List<String> data_Puesto = new ArrayList<>(); // Replace with your data source
-        List<String> data_Hora = new ArrayList<>(); // Replace with your data source
+        List<Item> data_Lista = new ArrayList<>(); // Replace with your data source
 
         for (Empleado e : emps){
-            data_Nombres.add(e.getNombre());
-            data_PApellido.add(e.getPApellido());
-            data_SApellido.add(e.getSApellido());
-            data_Salario.add(e.getSalario().toString() + "€");
-            data_Puesto.add(e.getPuestoTrabajo());
-            data_Hora.add(e.getHorario_Entrada() + "-" + e.getHorario_Salida());
+            data_Lista.add(new Item(e.getNombre()));
+            data_Lista.add(new Item(e.getPApellido()));
+            data_Lista.add(new Item(e.getSApellido()));
+            data_Lista.add(new Item(e.getPuestoTrabajo()));
         }
 
-        MyAdapter adapterNombres = new MyAdapter(data_Nombres);
-        MyAdapter adapterPApellido = new MyAdapter(data_PApellido);
-        MyAdapter adapterSApellido = new MyAdapter(data_SApellido);
-        MyAdapter adapterSalario = new MyAdapter(data_Salario);
-        MyAdapter adapterPuesto = new MyAdapter(data_Puesto);
+        MyAdapter adapter = new MyAdapter(this, data_Lista);
+        listaGrid.setAdapter(adapter);
 
-        listaNombres.setAdapter(adapterNombres);
-        listaNombres.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        listaPApellido.setAdapter(adapterPApellido);
-        listaPApellido.setLayoutManager(new LinearLayoutManager(this));
+    public void OrdenarPorNombre(View view) {
+        Thread thread = new Thread(() -> {
+            if (!ordenadoPor.equals("nombre")){
+                direccion = DatabaseManager.Direccion.ASC;
+            } else if (direccion == DatabaseManager.Direccion.ASC){
+                direccion = DatabaseManager.Direccion.DESC;
+            } else if (direccion == DatabaseManager.Direccion.DESC) {
+                direccion = DatabaseManager.Direccion.ASC;
+            }
+            ArrayList<Empleado> emp = DatabaseManager.GetEmpleadosByNombre(direccion);
+            ordenadoPor = "nombre";
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    UpdateListaEmpleados(emp);
+                }
+            });
 
-        listaSApellido.setAdapter(adapterSApellido);
-        listaSApellido.setLayoutManager(new LinearLayoutManager(this));
+        });
+        thread.start();
+    }
 
-        listaSalario.setAdapter(adapterSalario);
-        listaSalario.setLayoutManager(new LinearLayoutManager(this));
+    public void OrdenarPorPrimerApellido(View view) {
+        Thread thread = new Thread(() -> {
+            if (!ordenadoPor.equals("papellido")){
+                direccion = DatabaseManager.Direccion.ASC;
+            } else if (direccion == DatabaseManager.Direccion.ASC){
+                direccion = DatabaseManager.Direccion.DESC;
+            } else if (direccion == DatabaseManager.Direccion.DESC) {
+                direccion = DatabaseManager.Direccion.ASC;
+            }
+            ArrayList<Empleado> emp = DatabaseManager.GetEmpleadosByPApellido(direccion);
+            ordenadoPor = "papellido";
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    UpdateListaEmpleados(emp);
+                }
+            });
 
-        listaPuesto.setAdapter(adapterPuesto);
-        listaPuesto.setLayoutManager(new LinearLayoutManager(this));
+        });
+        thread.start();
+    }
 
+    public void OrdenarPorSegundoApellido(View view) {
+        Thread thread = new Thread(() -> {
+            if (!ordenadoPor.equals("sapellido")){
+                direccion = DatabaseManager.Direccion.ASC;
+            } else if (direccion == DatabaseManager.Direccion.ASC){
+                direccion = DatabaseManager.Direccion.DESC;
+            } else if (direccion == DatabaseManager.Direccion.DESC) {
+                direccion = DatabaseManager.Direccion.ASC;
+            }
+            ArrayList<Empleado> emp = DatabaseManager.GetEmpleadosBySApellido(direccion);
+            ordenadoPor = "sapellido";
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    UpdateListaEmpleados(emp);
+                }
+            });
+
+        });
+        thread.start();
+    }
+
+    public void OrdenarPorPuesto(View view) {
+            Thread thread = new Thread(() -> {
+            if (!ordenadoPor.equals("puesto")){
+                direccion = DatabaseManager.Direccion.ASC;
+            } else if (direccion == DatabaseManager.Direccion.ASC){
+                direccion = DatabaseManager.Direccion.DESC;
+            } else if (direccion == DatabaseManager.Direccion.DESC) {
+                direccion = DatabaseManager.Direccion.ASC;
+            }
+            ArrayList<Empleado> emp = DatabaseManager.GetEmpleadosByPuestoTrabajo(direccion);
+            ordenadoPor = "puesto";
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    UpdateListaEmpleados(emp);
+                }
+            });
+
+        });
+        thread.start();
     }
 
     @Override

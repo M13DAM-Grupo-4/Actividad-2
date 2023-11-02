@@ -1,46 +1,35 @@
 package m13dam.grupo4.actividad2;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private List<String> items;
-
-    public MyAdapter(List<String> items) {
-        this.items = items;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent, false);
-        return new ViewHolder(view);
+public class MyAdapter extends ArrayAdapter<Item> {
+    public MyAdapter(Context context, List<Item> items) {
+        super(context, 0, items);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String item = items.get(position);
-        holder.textView.setText(item);
-    }
-
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.textView);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
         }
+
+        Item item = getItem(position);
+
+        TextView itemName = convertView.findViewById(R.id.itemName);
+        itemName.setText(item.getName());
+
+        return convertView;
     }
 }
+
