@@ -97,7 +97,7 @@ public class EliminarEmple extends AppCompatActivity {
         Thread thread = new Thread(() -> {
             arrayEmpleadosElim = DatabaseManager.GetEmpleadosById(DatabaseManager.Direccion.ASC);
             for (int i = 0; i < arrayEmpleadosElim.size(); i++) {
-                // Construimos una cadena con todos los datos que deseas mostrar
+
                 String datosEmpleado = arrayEmpleadosElim.get(i).getNombre() + " "+
                         arrayEmpleadosElim.get(i).getPApellido() + " " +
                         arrayEmpleadosElim.get(i).getSApellido() + " - " +
@@ -112,7 +112,7 @@ public class EliminarEmple extends AppCompatActivity {
                     adaptadorDos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     empleados.setAdapter(adaptadorDos);
 
-                    // Función que nos permite obtener la posición seleccionada en el spinner
+
                     empleados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id_JVM) {
