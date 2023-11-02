@@ -49,7 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
-        android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/fotoEncargado"
         app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -61,7 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="24dp"
-        android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/fotoEncargado"
         app:layout_constraintTop_toBottomOf="@+id/nombreEncargado" />
 
