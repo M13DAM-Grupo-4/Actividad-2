@@ -7,12 +7,14 @@ import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +38,7 @@ public class ListasEmpleados extends AppCompatActivity  {
     private TextView apellidosEncargado;
     private GridView listaGrid;
 
-    String ordenadoPor;
+    String ordenadoPor = "";
     DatabaseManager.Direccion direccion;
 
     private ArrayList<Empleado> ListaEmpleados;
@@ -59,15 +61,12 @@ public class ListasEmpleados extends AppCompatActivity  {
                 ArrayList<Empleado> emps = DatabaseManager.GetEmpleadosByNombre(DatabaseManager.Direccion.ASC);
                 System.out.println(emps);
                 Handler handler = new Handler(Looper.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        nombreEncargado.setText(enc.getNombre());
-                        apellidosEncargado.setText(enc.getPApellido() + " " + enc.getSApellido());
-                        UpdateListaEmpleados(emps);
-                        ordenadoPor = "nombre";
-                        direccion = DatabaseManager.Direccion.ASC;
-                    }
+                handler.post(() -> {
+                    nombreEncargado.setText(enc.getNombre());
+                    apellidosEncargado.setText(enc.getPApellido() + " " + enc.getSApellido());
+                    UpdateListaEmpleados(emps);
+                    ordenadoPor = "nombre";
+                    direccion = DatabaseManager.Direccion.ASC;
                 });
 
             } catch (Exception e){
@@ -76,12 +75,10 @@ public class ListasEmpleados extends AppCompatActivity  {
         });
         thread.start();
 
-        añadirEmple.setOnClickListener(new View.OnClickListener(){
-            public void onClick (View v) {
-                Intent intent = new Intent(ListasEmpleados.this, FormularioEmpleado.class);
-                startActivity(intent);
-                finish();
-            }
+        añadirEmple.setOnClickListener(v -> {
+            Intent intent = new Intent(ListasEmpleados.this, FormularioEmpleado.class);
+            startActivity(intent);
+            finish();
         });
 
         eliminarEmple = findViewById(R.id.eliminar_empleado);
@@ -117,14 +114,20 @@ public class ListasEmpleados extends AppCompatActivity  {
         List<Item> data_Lista = new ArrayList<>(); // Replace with your data source
 
         for (Empleado e : emps){
-            data_Lista.add(new Item(e.getNombre()));
-            data_Lista.add(new Item(e.getPApellido()));
-            data_Lista.add(new Item(e.getSApellido()));
-            data_Lista.add(new Item(e.getPuestoTrabajo()));
+            data_Lista.add(new Item(e.getID(),e.getNombre()));
+            data_Lista.add(new Item(e.getID(),e.getPApellido()));
+            data_Lista.add(new Item(e.getID(),e.getSApellido()));
+            data_Lista.add(new Item(e.getID(),e.getPuestoTrabajo()));
         }
 
         MyAdapter adapter = new MyAdapter(this, data_Lista);
         listaGrid.setAdapter(adapter);
+
+        listaGrid.setOnItemClickListener((parent, view, position, id) -> {
+            InfoUsuario.SettingsFragmentUsuario.setEmpleado(emps.get(position));
+            Intent intent = new Intent(ListasEmpleados.this, InfoUsuario.class);
+            startActivity(intent);
+        });
 
     }
 

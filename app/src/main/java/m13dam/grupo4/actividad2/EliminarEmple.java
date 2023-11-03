@@ -40,6 +40,9 @@ public class EliminarEmple extends AppCompatActivity {
 
         eliminar.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v) {
+                if (arrayEmpleadosElim == null){
+                    return;
+                }
                 if (posicionSeleccionada >= 0 && posicionSeleccionada < arrayEmpleadosElim.size()) {
                     Thread thread = new Thread(() -> {
                         try {

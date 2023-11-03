@@ -16,6 +16,10 @@
         tools:ignore="DataExtractionRules"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".InfoUsuario"
+            android:exported="false"
+            android:label="@string/title_activity_info_usuario" />
+        <activity
             android:name=".EliminarEmple"
             android:parentActivityName=".ListasEmpleados"
             android:screenOrientation="portrait">
@@ -23,7 +27,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ListasEmpleados" />
         </activity>
-
         <activity
             android:name=".FormularioEmpleado"
             android:parentActivityName=".ListasEmpleados"
