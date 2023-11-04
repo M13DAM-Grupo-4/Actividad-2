@@ -92,6 +92,17 @@ public class InfoUsuario extends AppCompatActivity {
             BigDecimal Salario = new BigDecimal(SettingsFragmentUsuario.salario.getText());
             String Puesto = SettingsFragmentUsuario.puesto.getText();
 
+            if (Nombre.equals("") || PApellido.equals("") || SApellido.equals("") || Puesto.equals("")){
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Rellene todos los campos", Toast.LENGTH_LONG).show();
+                    }
+                });
+                return;
+            }
+
             if (HEntrada.length() != 5 || HEntrada.split(":").length != 2){
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {
