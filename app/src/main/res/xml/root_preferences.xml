@@ -48,11 +48,6 @@
             android:title="Hora de salida"
             app:key="usuario-hsalida"
             app:useSimpleSummaryProvider="true" />
-        <MultiSelectListPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:title="Departamento"
-            app:key="usuario-departamento" />
         <EditTextPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,6 +57,12 @@
             android:title="Salario"
             app:key="usuario-salario"
             app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1"
+            android:title="Departamento"
+            app:key="usuarioDep" />
         <EditTextPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

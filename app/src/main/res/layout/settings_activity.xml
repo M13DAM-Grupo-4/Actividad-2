@@ -21,10 +21,11 @@
         </FrameLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/guardarUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="guardarUsuario"
             android:text="Guardar"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"

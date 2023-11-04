@@ -114,10 +114,44 @@ public class DatabaseManager {
         return -1;
     }
 
+    public static void EditEmpleado(Empleado empleado){
+        try {
+            Connection c = CreateConnection();
+            PreparedStatement stmt = c.prepareStatement("UPDATE public.empleados SET " +
+                    "nombre=?," +
+                    "p_apellido=?," +
+                    "s_apellido=?," +
+                    "salario=?," +
+                    "horario_entrada=?," +
+                    "horario_salida=?," +
+                    "id_departamento=?," +
+                    "puesto_trabajo=?" +
+                    " WHERE id=?");
+            stmt.setString(1, empleado.getNombre());
+            stmt.setString(2, empleado.getPApellido());
+            stmt.setString(3, empleado.getSApellido());
+            stmt.setBigDecimal(4, empleado.getSalario());
+            stmt.setString(5, empleado.getHorario_Entrada());
+            stmt.setString(6, empleado.getHorario_Salida());
+            stmt.setInt(7, empleado.getID_Departamento());
+            stmt.setString(8, empleado.getPuestoTrabajo());
+            stmt.setInt(9, empleado.getID());
+
+            stmt.executeUpdate();
+
+            stmt.close();
+            c.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static int AddEmpleado(Empleado empleado){
         try {
             Connection c = CreateConnection();
-            PreparedStatement stmt = c.prepareStatement("INSERT INTO public.empleados (nombre, p_apellido, " +
+            PreparedStatement stmt = c.prepareStatement("INSERT INTO public.empleados SET (nombre, p_apellido, " +
                     "s_apellido, salario, horario_entrada, horario_salida, " +
                     "id_departamento, puesto_trabajo) VALUES" +
                     "(?,?,?,?,?,?,?,?) RETURNING id");

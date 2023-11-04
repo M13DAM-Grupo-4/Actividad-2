@@ -124,9 +124,15 @@ public class ListasEmpleados extends AppCompatActivity  {
         listaGrid.setAdapter(adapter);
 
         listaGrid.setOnItemClickListener((parent, view, position, id) -> {
-            InfoUsuario.SettingsFragmentUsuario.setEmpleado(emps.get(position));
-            Intent intent = new Intent(ListasEmpleados.this, InfoUsuario.class);
-            startActivity(intent);
+            Thread thread = new Thread(() -> {
+                int fpos = (int) Math.ceil(position / 4);
+                InfoUsuario.SettingsFragmentUsuario.setEmpleado(emps.get(fpos));
+                InfoUsuario.SettingsFragmentUsuario.setDep(DatabaseManager.GetDepartamentoById(emps.get(fpos).getID_Departamento()));
+                InfoUsuario.SettingsFragmentUsuario.setDeps(DatabaseManager.GetDepartamentos());
+                Intent intent = new Intent(ListasEmpleados.this, InfoUsuario.class);
+                startActivity(intent);
+            });
+            thread.start();
         });
 
     }
